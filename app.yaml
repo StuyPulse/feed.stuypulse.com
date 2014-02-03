@@ -29,5 +29,6 @@ handlers:
   expiration: 7d
 - url: /admin.*
   script: feed.admin.application
+  login: admin
 - url: /.*
   script: feed.main.application

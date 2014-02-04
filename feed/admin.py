@@ -10,6 +10,12 @@ class HangoutUrl(ndb.Model):
 class AdminHandler(webapp2.RequestHandler):
 
 	def get(self):
+		if self.request.get('fetch_hangout_url') != "":
+			if (HangoutUrl.get_by_id(694) is None):
+				self.response.write('')
+			else:
+				self.response.write(HangoutUrl.get_by_id(694).content)
+			return
 		user = users.get_current_user()
 		if user:
 			if users.is_current_user_admin():

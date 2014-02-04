@@ -9,19 +9,15 @@ class HangoutUrl(ndb.Model):
 class AdminHandler(webapp2.RequestHandler):
 
     def get(self):
-        if self.request.get('fetch_hangout_url') != "":
-            if (HangoutUrl.get_by_id(694) is None):
-                self.response.write('')
-            else:
-                self.response.write(HangoutUrl.get_by_id(694).content)
-            return
         user = users.get_current_user()
         if user:
             if users.is_current_user_admin():
                 template_values = {
-                        'user': user.nickname(),
-                        'logout_url': users.create_logout_url('/'),
-                        }
+                    'user': user.nickname(),
+                    'logout_url': users.create_logout_url('/'),
+                    'hangout_exists': not HangoutUrl.get_by_id(694) is None,
+                    'hangout_link': '' if HangoutUrl.get_by_id(694) is None else HangoutUrl.get_by_id(694).content
+                }
                 template = JINJA_ENVIRONMENT.get_template('admin.html')
                 self.response.write(template.render(template_values))
             else:

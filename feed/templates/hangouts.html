@@ -5,16 +5,16 @@
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
-	$(document).ready(function() {
-		$.get("/admin", {fetch_hangout_url: true}, function(data){
-			var url = data;
-			if (data != ""){
-				$("#hangout_url_container").html("<p> There is a hangout currently on air! <a href=\"" + data + "\">Click here</a>");
-			}
-			else {
-				$("#hangout_url_container").html("<p> There is no hangout currently on air. </p>");
-			}
-		});				
-	});
+    $(document).ready(function() {
+        $.get("/admin", {fetch_hangout_url: true}, function(data){
+            var url = data;
+            if (data != ""){
+                $("#hangout_url_container").html("<p> There is a hangout currently on air! <a href=\"" + data + "\">Click here</a>");
+            }
+            else {
+                $("#hangout_url_container").html("<p> There is no hangout currently on air. </p>");
+            }
+        });                
+    });
 </script>
 {% endblock %}

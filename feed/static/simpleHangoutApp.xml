@@ -40,49 +40,23 @@
 
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 
-<h3>Simple Hangout App</h3>
+<div id="hangout-url"></div>
+<div id="youtube-id"></div>
 
-<p>
-<input class="button" type="button" value="Show participants!" id="showParticipants" 
-    style="visibility:hidden;"
-    onClick="showParticipants()"/>
-</p>
-
-<div id="participantsDiv"></div>
-
-<hr>
-
-<p><a href="http://developers.google.com/+/hangouts/getting-started">Read the docs</a> to learn more about developing hangouts!</a></p>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/static/jquery-1.10.2.min.js"><\/script>')</script>
 
 <script>
-function showParticipants() {
-  var participants = gapi.hangout.getParticipants();
-
-  var retVal = '<p>Participants: </p><ul>';
-
-  for (var index in participants) {
-    var participant = participants[index];
-
-    if (!participant.person) {
-      retVal += '<li>A participant not running this app</li>';
-    }
-    retVal += '<li>' + participant.person.displayName + '</li>';
-  }
-
-  retVal += '</ul>';
-
-  var div = document.getElementById('participantsDiv');
-
-  div.innerHTML = retVal;
-}
-
 function init() {
   // When API is ready...                                                         
   gapi.hangout.onApiReady.add(
       function(eventObj) {
         if (eventObj.isApiReady) {
-          document.getElementById('showParticipants')
-            .style.visibility = 'visible';
+            $('#hangout-url').text(gapi.hangout.getHangoutUrl());
+            if (gapi.hangout.onair.isBroadcasting()) {
+                $('#youtube-id').text(gapi.hangout.onair.getYouTubeLiveId());
+            }
+            $.get("https://feed-stuypulse.appspot.com/hangout", {hangoutUrl: gapi.hangout.getHangoutUrl(), youtubeId: gapi.hangout.onair.getYouTubeLiveId()}, function() {});
         }
       });
 }

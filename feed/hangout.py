@@ -3,7 +3,8 @@ from feed import HangoutUrl
 
 class HangoutHandler(webapp2.RequestHandler):
 
-    def post(self):
+    def get(self):
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
         hangout = self.request.get('hangoutUrl')
         hangoutUrl = HangoutUrl(id=1)
         hangoutUrl.content = url

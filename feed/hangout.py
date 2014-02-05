@@ -12,3 +12,7 @@ class HangoutHandler(webapp2.RequestHandler):
         youtubeUrl = HangoutUrl(id=2)
         youtubeUrl.content = youtube
         youtubeUrl.put()
+
+application = webapp2.WSGIApplication([
+    ('/hangout', HangoutHandler)
+], debug=True)

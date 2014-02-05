@@ -27,6 +27,8 @@ handlers:
 - url: /static
   static_dir: feed/static
   expiration: 7d
+- url: /hangout
+  script: feed.hangout.application
 - url: /admin.*
   script: feed.admin.application
 - url: /.*

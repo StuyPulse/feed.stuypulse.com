@@ -1,10 +1,6 @@
-from feed import JINJA_ENVIRONMENT
+from feed import JINJA_ENVIRONMENT, HangoutUrl
 import webapp2, urllib
 from google.appengine.api import users
-from google.appengine.ext import ndb
-
-class HangoutUrl(ndb.Model):
-    content = ndb.StringProperty()
 
 class MainHandler(webapp2.RequestHandler):
 

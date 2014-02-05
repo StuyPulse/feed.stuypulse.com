@@ -1,10 +1,6 @@
-from feed import JINJA_ENVIRONMENT
+from feed import JINJA_ENVIRONMENT, HangoutUrl
 import webapp2, urllib
 from google.appengine.api import users
-from google.appengine.ext import ndb
-
-class HangoutUrl(ndb.Model):
-    content = ndb.StringProperty()
 
 class AdminHandler(webapp2.RequestHandler):
 
@@ -15,8 +11,9 @@ class AdminHandler(webapp2.RequestHandler):
                 template_values = {
                     'user': user.nickname(),
                     'logout_url': users.create_logout_url('/'),
-                    'hangout_exists': not HangoutUrl.get_by_id(694) is None,
-                    'hangout_link': '' if HangoutUrl.get_by_id(694) is None else HangoutUrl.get_by_id(694).content
+                    'hangout_exists': not HangoutUrl.get_by_id(1) is None,
+                    'hangout_link': '' if HangoutUrl.get_by_id(1) is None else HangoutUrl.get_by_id(694).content,
+                    'youtube_link': HangoutUrl.get_by_id(2)
                 }
                 template = JINJA_ENVIRONMENT.get_template('admin.html')
                 self.response.write(template.render(template_values))

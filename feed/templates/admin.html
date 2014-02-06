@@ -9,49 +9,20 @@
     </div>
 </div>
 <div class="sixteen columns">
-    <div id="hangout_url_container">
+    <div id="hangout_url_container"><p>
     {% if hangout_exists %}
-        There is currently a hangout on air! Click <a href="{{ hangout_link }}">here</a>
-        {{ youtube_link }}
+        There is currently a hangout on air!<br>
+        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+        Click <a href="{{ youtube_link }}">here</a> to view the Youtube feed!
     {% else %}
         There is currently no hangout on air! boohoo :(
+        Would you like to create a hangout?</p>
     {% endif %}
-    </div>
-    <p>Would you like to create a hangout?</p>
+    </p></div>
     <div id="placeholder-div"></div>
-    <div id="panel_one" style="visibility:hidden">
-        <p>
-            <hr style="margin: 10px 0 20px">
-            After creating a hangout, paste the hangout URL here: 
-            <input type="url" id="hangout_url">
-            <br>
-            <br>
-            <input type="submit" value="Show public hangout URL" id="show_hangout">
-            <br>
-            <input type="submit" value="Remove public hangout URL" id="remove_hangout">
-        </p>
-    </div>
 </div>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#placeholder-div").ready(setTimeout(function() { // Tried the load() event, but it doesn't fire
-            $("#panel_one").css("visibility", "visible");
-        }, 1000));
-        $("#show_hangout").click(function() {
-            url = $("#hangout_url").val();
-            $.post("/admin", {show_hangout_url: url}, function(data) {
-                alert(data);
-            });
-        });
-        $("#remove_hangout").click(function() {
-            $.post("/admin", {remove_hangout_url: 'True'}, function(data) {
-                alert(data);
-            });
-        });
-    });
-</script>
 <script type="text/javascript">
 window.___gcfg = {
   lang: 'en-US'

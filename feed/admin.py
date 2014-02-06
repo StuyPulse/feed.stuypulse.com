@@ -12,8 +12,8 @@ class AdminHandler(webapp2.RequestHandler):
                     'user': user.nickname(),
                     'logout_url': users.create_logout_url('/'),
                     'hangout_exists': not HangoutUrl.get_by_id(1) is None,
-                    'hangout_link': '' if HangoutUrl.get_by_id(1) is None else HangoutUrl.get_by_id(694).content,
-                    'youtube_link': HangoutUrl.get_by_id(2)
+                    'hangout_link': '' if HangoutUrl.get_by_id(1) is None else HangoutUrl.get_by_id(1).content,
+                    'youtube_link': HangoutUrl.get_by_id(2).content
                 }
                 template = JINJA_ENVIRONMENT.get_template('admin.html')
                 self.response.write(template.render(template_values))
@@ -22,18 +22,6 @@ class AdminHandler(webapp2.RequestHandler):
         else:
             login_url = users.create_login_url('/admin')
             self.redirect(login_url)
-
-    def post(self):
-        isRequestToRemove = (self.request.get('remove_hangout_url') != '')
-        if isRequestToRemove:
-            ndb.Key(HangoutUrl, 694).delete() 
-            self.response.write("URL removed.")
-        else:
-            url = self.request.get('show_hangout_url')
-            hangoutUrl = HangoutUrl(id=694)
-            hangoutUrl.content = url
-            hangoutUrl.put()
-            self.response.write("Displaying hangout URL: \n" + url)
 
 application = webapp2.WSGIApplication([
     ('/admin.*', AdminHandler)

@@ -1,6 +1,7 @@
 from feed import JINJA_ENVIRONMENT, HangoutUrl
 import webapp2, urllib
 from google.appengine.api import users
+from google.appengine.ext import ndb
 
 class AdminHandler(webapp2.RequestHandler):
 
@@ -8,6 +9,9 @@ class AdminHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             if users.is_current_user_admin():
+                if self.request.get('kill') != 'True':
+                    ndb.Key(HangoutUrl, 1).delete()
+                    ndb.Key(HangoutUrl, 2).delete()
                 template_values = {
                     'user': user.nickname(),
                     'logout_url': users.create_logout_url('/'),

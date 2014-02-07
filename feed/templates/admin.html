@@ -11,8 +11,15 @@
 <div class="sixteen columns">
     <div id="hangout_url_container"><p>
     {% if hangout_exists %}
-        There is currently a hangout on air!<br>
-        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+        <div class="row">
+            <div class="ten columns">
+                There is currently a hangout on air!<br>
+                Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+            </div>
+            <div class="six columns">
+                <a href="?kill=True" class="button">KILL THE FEED</a>
+            </div>
+        </div>
         <div id="youtube" style="text-align:center;"></div>
     {% else %}
         There is currently no hangout on air! boohoo :(<br>

@@ -7,3 +7,5 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class HangoutUrl(ndb.Model):
     content = ndb.StringProperty(indexed=False)
+    still_alive = ndb.BooleanProperty()
+    time = ndb.TimeProperty(auto_now=True)

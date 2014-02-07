@@ -1,0 +1,4 @@
+cron:
+- description: hangout heartbeat
+  url: /hangout
+  schedule: every 5 minutes

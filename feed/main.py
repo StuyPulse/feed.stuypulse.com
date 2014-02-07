@@ -14,7 +14,7 @@ class MainHandler(webapp2.RequestHandler):
         template_values = {
             'hangout_exists': not HangoutUrl.get_by_id(1) is None,
             'hangout_link': '' if HangoutUrl.get_by_id(1) is None else HangoutUrl.get_by_id(1).content,
-            'youtube_link': HangoutUrl.get_by_id(2).content
+            'youtube_link': 'dQw4w9WgXcQ' if HangoutUrl.get_by_id(2) is None else HangoutUrl.get_by_id(2).content
         }
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))

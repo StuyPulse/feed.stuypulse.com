@@ -50,15 +50,18 @@
 function init() {
   // When API is ready...                                                         
   gapi.hangout.onApiReady.add(
-      function(eventObj) {
-        if (eventObj.isApiReady) {
-            $('#hangout-url').text(gapi.hangout.getHangoutUrl());
-            if (gapi.hangout.onair.isBroadcasting()) {
-                $('#youtube-id').text(gapi.hangout.onair.getYouTubeLiveId());
-            }
-            $.get("https://feed-stuypulse.appspot.com/hangout", {hangoutUrl: gapi.hangout.getHangoutUrl(), youtubeId: gapi.hangout.onair.getYouTubeLiveId()}, function() {});
-        }
-      });
+    function(eventObj) {
+      if (eventObj.isApiReady) {
+        $('#hangout-url').text(gapi.hangout.getHangoutUrl());
+        $.post("https://feed-stuypulse.appspot.com/hangout", {'hangoutUrl': gapi.hangout.getHangoutUrl()}, function() {});
+        gapi.hangout.onair.onBroadcastingChanged.add(function() {
+          gapi.hangout.onair.onYouTubeLiveIdReady.add(function() {
+            $('#youtube-id').text(gapi.hangout.onair.getYouTubeLiveId());
+            $.post("https://feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}, function() {});
+          });
+        });
+      }
+  });
 }
 
 // Wait for gadget to load.                                                       
@@ -68,4 +71,3 @@ gadgets.util.registerOnLoadHandler(init);
 ]]>
 </Content>
 </Module>
-

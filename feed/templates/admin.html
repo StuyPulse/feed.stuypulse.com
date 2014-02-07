@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="row">
-    <div class="fourteen columns">
+    <div class="fifteen columns">
         <h1>Hello {{ user }}!</h1>
     </div>
     <div class="one columns">
@@ -13,16 +13,30 @@
     {% if hangout_exists %}
         There is currently a hangout on air!<br>
         Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        Click <a href="{{ youtube_link }}">here</a> to view the Youtube feed!
+        <div id="youtube" style="text-align:center;"></div>
     {% else %}
-        There is currently no hangout on air! boohoo :(
-        Would you like to create a hangout?</p>
+        There is currently no hangout on air! boohoo :(<br>
+        Would you like to create a hangout?
     {% endif %}
     </p></div>
     <div id="placeholder-div"></div>
 </div>
 {% endblock %}
 {% block scripts %}
+{% if hangout_exists %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#youtube').html('<iframe style="margin:auto; width:853; height:480;" src="//www.youtube.com/embed/{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>');
+    youtubeResize();
+});
+$(window).resize(youtubeResize);
+function youtubeResize() {
+    var w = $('#youtube').parent().parent().width() * .9;
+    $('#youtube iframe').width(w);
+    $('#youtube iframe').height(w / 1.777);
+}
+</script>
+{% else %}
 <script type="text/javascript">
 window.___gcfg = {
   lang: 'en-US'
@@ -40,4 +54,5 @@ function renderButtons(){
   });
 }
 </script>
+{% endif %}
 {% endblock %}

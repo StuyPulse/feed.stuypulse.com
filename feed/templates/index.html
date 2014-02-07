@@ -1,16 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1 class="text-center">Stuypulse on AIR</h1>
+<h1 style="text-align:center;">Stuypulse on AIR</h1>
 <hr>
 <div class="sixteen columns">
     <div id="hangout_url_container"><p>
     {% if hangout_exists %}
         There is currently a hangout on air!<br>
         Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        Click <a href="{{ youtube_link }}">here</a> to view the Youtube feed!
+        <div id="youtube" style="text-align:center;"></div>
     {% else %}
         There is currently no hangout on air! boohoo :(
     {% endif %}
     </p></div>
 </div>
+{% endblock %}
+{% block scripts %}
+{% if hangout_exists %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#youtube').html('<iframe style="margin:auto; width:853; height:480;" src="//www.youtube.com/embed/{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>');
+    youtubeResize();
+});
+$(window).resize(youtubeResize);
+function youtubeResize() {
+    var w = $('#youtube').parent().parent().width() * .9;
+    $('#youtube iframe').width(w);
+    $('#youtube iframe').height(w / 1.777);
+}
+</script>
+{% endif %}
 {% endblock %}

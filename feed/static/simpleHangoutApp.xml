@@ -70,7 +70,7 @@ gadgets.util.registerOnLoadHandler(init);
 
 <script>
 setInterval(function() {
-  $.post("https://feed-stuypulse.appspot.com/hangout", {'time': True}, function() {});
+  $.post("https://feed-stuypulse.appspot.com/hangout", {'time': 'True'}, function() {});
 }, 150000);
 </script>
 </body>

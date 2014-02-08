@@ -21,10 +21,9 @@ class HangoutHandler(webapp2.RequestHandler):
             hangoutUrl.put()
         youtube = self.request.get('youtubeId')
         if youtube != '':
-            youtubeUrl = HangoutUrl(id=2, content=hangout)
+            youtubeUrl = HangoutUrl(id=2, content=youtube)
             youtubeUrl.put()
-        if self.request.get('time') != '':
-            HangoutUrl.get_by_id(1).time = datetime.now()
+        HangoutUrl.get_by_id(1).time = datetime.now()
 
 application = webapp2.WSGIApplication([
     ('/hangout', HangoutHandler)

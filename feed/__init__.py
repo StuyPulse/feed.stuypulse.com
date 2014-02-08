@@ -6,5 +6,5 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'])
 
 class HangoutUrl(ndb.Model):
-    time = ndb.DateTimeProperty()
     content = ndb.StringProperty(indexed=False)
+    time = ndb.DateTimeProperty()

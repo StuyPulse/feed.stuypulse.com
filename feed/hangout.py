@@ -15,15 +15,16 @@ class HangoutHandler(webapp2.RequestHandler):
 
     def post(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        hangoutUrl = HangoutUrl.get_by_id(1)
         hangout = self.request.get('hangoutUrl')
         if hangout != '':
-            hangoutUrl = HangoutUrl(id=1, content=hangout)
-            hangoutUrl.put()
+            hangoutUrl.content = hangout
         youtube = self.request.get('youtubeId')
         if youtube != '':
             youtubeUrl = HangoutUrl(id=2, content=youtube)
             youtubeUrl.put()
-        HangoutUrl.get_by_id(1).time = datetime.now()
+        hangoutUrl.time = datetime.now()
+        hangoutUrl.put()
 
 application = webapp2.WSGIApplication([
     ('/hangout', HangoutHandler)

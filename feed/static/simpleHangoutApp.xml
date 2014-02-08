@@ -43,6 +43,13 @@
 <div id="hangout-url"></div>
 <div id="youtube-id"></div>
 
+<h1>
+    Ignore<br>
+    Anything<br>
+    Here<br>
+</h1>
+<img src="http://http://stuypulse.com/img/694-logo.png" alt="Stuypulse Logo" />
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/static/jquery-1.10.2.min.js"><\/script>')</script>
 

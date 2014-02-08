@@ -29,6 +29,9 @@ handlers:
   expiration: 7d
 - url: /hangout
   script: feed.hangout.application
+- url: /hangout_kill
+  script: feed.hangout.application
+  login: admin
 - url: /admin.*
   script: feed.admin.application
 - url: /.*

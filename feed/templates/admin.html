@@ -1,32 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="row">
-    <div class="fifteen columns">
+    <div class="fourteen columns">
         <h1>Hello {{ user }}!</h1>
     </div>
-    <div class="one columns">
+    <div class="two columns" style="text-align:right">
         <a href="{{ logout_url }}" class="button">Logout</a>
     </div>
 </div>
-<div class="sixteen columns">
-    <div id="hangout_url_container"><p>
-    {% if hangout_exists %}
-        <div class="row">
-            <div class="ten columns">
-                There is currently a hangout on air!<br>
-                Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-            </div>
-            <div class="six columns">
-                <a href="?kill=True" class="button">KILL THE FEED</a>
-            </div>
+{% if hangout_exists %}
+    <div class="row">
+        <div class="thirteen columns">
+            There is currently a hangout on air!<br>
+            Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
         </div>
-        <div id="youtube" style="text-align:center;"></div>
-    {% else %}
-        There is currently no hangout on air! boohoo :(<br>
-        Would you like to create a hangout?
-    {% endif %}
-    </p></div>
-    <div id="placeholder-div"></div>
+        <div class="three columns" style="text-align:right">
+            <a href="?kill=True" class="button">KILL THE FEED</a>
+        </div>
+    </div>
+    <div id="youtube" style="text-align:center;"></div>
+{% else %}
+<p>There is currently no hangout on air! boohoo :(<br>
+Would you like to create a hangout?</p>
+{% endif %}
+<div class="row">
+    <div class="sixteen columns">
+        <div id="placeholder-div"></div>
+    </div>
 </div>
 {% endblock %}
 {% block scripts %}
@@ -38,7 +38,7 @@ $(document).ready(function() {
 });
 $(window).resize(youtubeResize);
 function youtubeResize() {
-    var w = $('#youtube').parent().parent().width() * .9;
+    var w = $('#youtube').parent().width() * .9;
     $('#youtube iframe').width(w);
     $('#youtube iframe').height(w / 1.777);
 }

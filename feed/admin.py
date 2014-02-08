@@ -9,7 +9,7 @@ class AdminHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             if users.is_current_user_admin():
-                if self.request.get('kill') != 'True':
+                if self.request.get('kill') == 'True':
                     ndb.Key(HangoutUrl, 1).delete()
                     ndb.Key(HangoutUrl, 2).delete()
                 template_values = {

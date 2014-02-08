@@ -1,15 +1,17 @@
-import webapp2, datetime
+import webapp2
 from feed import HangoutUrl
+from datetime import datetime
+from google.appengine.ext import ndb
 
 class HangoutHandler(webapp2.RequestHandler):
 
     def get(self):
-        hangout = HangoutUrl(id=1)
-        youtube = HangoutUrl(id=2)
-        diff = datetime.datetime.now() - hangoutUrl.time
+        hangout = HangoutUrl.get_by_id(1)
+        youtube = HangoutUrl.get_by_id(2)
+        diff = datetime.now() - hangout.time
         if diff.seconds > 240:
-            hangout.delete()
-            youtube.delete()
+            ndb.Key(HangoutUrl, 1).delete()
+            ndb.Key(HangoutUrl, 2).delete()
 
     def post(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -22,7 +24,7 @@ class HangoutHandler(webapp2.RequestHandler):
             youtubeUrl = HangoutUrl(id=2, content=hangout)
             youtubeUrl.put()
         if self.request.get('time') != '':
-            HangoutUrl(id=1, still_alive=True).put()
+            HangoutUrl.get_by_id(1).time = datetime.now()
 
 application = webapp2.WSGIApplication([
     ('/hangout', HangoutHandler)

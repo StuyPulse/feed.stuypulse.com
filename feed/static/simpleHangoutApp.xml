@@ -67,6 +67,12 @@ function init() {
 // Wait for gadget to load.                                                       
 gadgets.util.registerOnLoadHandler(init);
 </script>
+
+<script>
+setInterval(function() {
+  $.post("https://feed-stuypulse.appspot.com/hangout", {'time': True}, function() {});
+}, 150000);
+</script>
 </body>
 ]]>
 </Content>

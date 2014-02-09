@@ -30,6 +30,6 @@ class HangoutKiller(webapp2.RequestHandler):
             ndb.Key(HangoutUrl, 2).delete()
 
 application = webapp2.WSGIApplication([
-    ('/hangout', HangoutHandler),
-    ('/hangout_kill', HangoutKiller)
+    ('/hangout_kill', HangoutKiller),
+    ('/hangout.*', HangoutHandler)
 ], debug=True)

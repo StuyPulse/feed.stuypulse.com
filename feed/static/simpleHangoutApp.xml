@@ -48,7 +48,7 @@
     Anything<br>
     Here<br>
 </h1>
-<img src="http://http://stuypulse.com/img/694-logo.png" alt="Stuypulse Logo" />
+<img src="http://stuypulse.com/img/694-logo.png" alt="Stuypulse Logo" />
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="/static/jquery-1.10.2.min.js"><\/script>')</script>
@@ -60,11 +60,11 @@ function init() {
     function(eventObj) {
       if (eventObj.isApiReady) {
         $('#hangout-url').text(gapi.hangout.getHangoutUrl());
-        $.post("https://feed-stuypulse.appspot.com/hangout", {'hangoutUrl': gapi.hangout.getHangoutUrl()}, function() {});
+        $.post("//feed-stuypulse.appspot.com/hangout", {'hangoutUrl': gapi.hangout.getHangoutUrl()}, function() {});
         gapi.hangout.onair.onBroadcastingChanged.add(function() {
           gapi.hangout.onair.onYouTubeLiveIdReady.add(function() {
             $('#youtube-id').text(gapi.hangout.onair.getYouTubeLiveId());
-            $.post("https://feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}, function() {});
+            $.post("//feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}, function() {});
           });
         });
       }

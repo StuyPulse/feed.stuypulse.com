@@ -2,17 +2,15 @@
 {% block body %}
 <h1 style="text-align:center;">Stuypulse on AIR</h1>
 <hr>
-<div class="sixteen columns">
-    <div id="hangout_url_container"><p>
-    {% if hangout_exists %}
-        There is currently a hangout on air!<br>
-        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        <div id="youtube" style="text-align:center;"></div>
-    {% else %}
-        There is currently no hangout on air! boohoo :(
-    {% endif %}
-    </p></div>
-</div>
+<div class="sixteen columns"><p>
+{% if hangout_exists %}
+    There is currently a hangout on air!<br>
+    Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+{% else %}
+    There is currently no hangout on air! boohoo :(
+{% endif %}
+</p></div>
+<div id="youtube" style="text-align:center;"></div>
 {% endblock %}
 {% block scripts %}
 {% if hangout_exists %}
@@ -23,7 +21,7 @@ $(document).ready(function() {
 });
 $(window).resize(youtubeResize);
 function youtubeResize() {
-    var w = $('#youtube').parent().parent().width() * .9;
+    var w = $('#youtube').parent().width() * .9;
     $('#youtube iframe').width(w);
     $('#youtube iframe').height(w / 1.777);
 }

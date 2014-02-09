@@ -9,25 +9,25 @@
     </div>
 </div>
 {% if hangout_exists %}
-    <div class="row">
-        <div class="thirteen columns">
-            There is currently a hangout on air!<br>
-            Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        </div>
-        <div class="three columns" style="text-align:right">
-            <a href="?kill=True" class="button">KILL THE FEED</a>
-        </div>
+<div class="row">
+    <div class="thirteen columns">
+        There is currently a hangout on air!<br>
+        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
     </div>
-    <div id="youtube" style="text-align:center;"></div>
+    <div class="three columns" style="text-align:right">
+        <a href="/admin" class="button" onclick="var c=window.confirm('Are you sure you want to kill the feed?');if(c){$.get('/admin',{'kill':'True'},function(){window.location.reload();})}">KILL THE FEED</a>
+    </div>
+</div>
+<div id="youtube" style="text-align:center;"></div>
 {% else %}
-<p>There is currently no hangout on air! boohoo :(<br>
-Would you like to create a hangout?</p>
-{% endif %}
 <div class="row">
     <div class="sixteen columns">
+        <p>There is currently no hangout on air! boohoo :(<br>
+        Would you like to create a hangout?</p>
         <div id="placeholder-div"></div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block scripts %}
 {% if hangout_exists %}

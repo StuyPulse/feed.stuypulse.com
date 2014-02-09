@@ -7,17 +7,18 @@ class HangoutHandler(webapp2.RequestHandler):
 
     def post(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-        hangout = self.request.get('hangoutUrl')
-        if hangout != '':
-            hangoutUrl = HangoutUrl(id=1, content=hangout)
+        if self.request.headers['Referer'].find("googleusercontent.com") != -1:
+            hangout = self.request.get('hangoutUrl')
+            if hangout != '':
+                hangoutUrl = HangoutUrl(id=1, content=hangout)
+                hangoutUrl.put()
+            youtube = self.request.get('youtubeId')
+            if youtube != '':
+                youtubeUrl = HangoutUrl(id=2, content=youtube)
+                youtubeUrl.put()
+            hangoutUrl = HangoutUrl.get_by_id(1)
+            hangoutUrl.time = datetime.now()
             hangoutUrl.put()
-        youtube = self.request.get('youtubeId')
-        if youtube != '':
-            youtubeUrl = HangoutUrl(id=2, content=youtube)
-            youtubeUrl.put()
-        hangoutUrl = HangoutUrl.get_by_id(1)
-        hangoutUrl.time = datetime.now()
-        hangoutUrl.put()
 
 class HangoutKiller(webapp2.RequestHandler):
 
@@ -31,5 +32,5 @@ class HangoutKiller(webapp2.RequestHandler):
 
 application = webapp2.WSGIApplication([
     ('/hangout_kill', HangoutKiller),
-    ('/hangout.*', HangoutHandler)
+    ('/hangout', HangoutHandler)
 ], debug=True)

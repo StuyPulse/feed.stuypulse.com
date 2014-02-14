@@ -13,6 +13,7 @@
     <div class="thirteen columns">
         There is currently a hangout on air!<br>
         Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+        If you ever accidently close the hangout, start the Stuypulse on Air app on the left side of the hangout screen.
     </div>
     <div class="three columns" style="text-align:right">
         <a href="/admin" class="button" onclick="var c=window.confirm('Are you sure you want to kill the feed?');if(c){$.get('/admin',{'kill':'True'},function(){window.location.reload();})}">KILL THE FEED</a>

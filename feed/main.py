@@ -5,9 +5,6 @@ from google.appengine.api import users
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
-        # Set the cross origin resource sharing header to allow AJAX
-        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-
         user = users.get_current_user()
         if users.is_current_user_admin():
             self.redirect("/admin")

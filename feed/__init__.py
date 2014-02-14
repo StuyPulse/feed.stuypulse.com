@@ -8,3 +8,4 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class HangoutUrl(ndb.Model):
     content = ndb.StringProperty()
     time = ndb.DateTimeProperty()
+    not_sent = ndb.BooleanProperty()

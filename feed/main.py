@@ -1,8 +1,9 @@
-from feed import JINJA_ENVIRONMENT, HangoutUrl
-import webapp2, urllib
+import os, urllib
 from google.appengine.api import users
+from feed import *
+from models import *
 
-class MainHandler(webapp2.RequestHandler):
+class MainHandler(BaseHandler):
 
     def get(self):
         user = users.get_current_user()
@@ -13,8 +14,7 @@ class MainHandler(webapp2.RequestHandler):
             'hangout_link': '' if HangoutUrl.get_by_id(1) is None else HangoutUrl.get_by_id(1).content,
             'youtube_link': 'dQw4w9WgXcQ' if HangoutUrl.get_by_id(2) is None else HangoutUrl.get_by_id(2).content
         }
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render(template_values))
+        self.render_template('index.html', template_values)
 
 application = webapp2.WSGIApplication([
     ('/.*', MainHandler)

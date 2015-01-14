@@ -1,35 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="row">
-    <div class="fourteen columns">
-        <h1>Hello {{ user }}!</h1>
-    </div>
-    <div class="two columns" style="text-align:right">
-        <a href="{{ logout_url }}" class="button">Logout</a>
-    </div>
+<div class="page-header text-center">
+    <h1 class="title">StuyPulse on AIR</h1>
 </div>
+{% include "navbar.html" %}
 {% if hangout_exists %}
 <div class="row">
-    <div class="thirteen columns">
+    <div class="col-md-10">
         There is currently a hangout on air!<br>
         Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        If you ever accidently close the hangout, start the Stuypulse on Air app on the left side of the hangout screen.
+        If you ever accidently close the hangout, start the <code>Stuypulse on Air</code> app on the left side of the hangout screen.
     </div>
-    <div class="three columns" style="text-align:right">
+    <div class="col-md-2">
         <a href="/admin" class="button" onclick="var c=window.confirm('Are you sure you want to kill the feed?');if(c){$.get('/admin',{'kill':'True'},function(){window.location.reload();})}">KILL THE FEED</a>
     </div>
 </div>
-<div id="youtube" style="text-align:center;"></div>
+<div id="youtube" class="text-center"></div>
 {% else %}
 <div class="row">
-    <div class="sixteen columns">
-        <p>There is currently no hangout on air! boohoo :(<br>
-        Would you like to create a hangout?</p>
+    <div class="col-md-12">
+        There is currently no hangout on air! boohoo :(<br>
+        Would you like to create a hangout?
         <div id="placeholder-div"></div>
     </div>
 </div>
 {% endif %}
 {% endblock %}
+
 {% block scripts %}
 {% if hangout_exists %}
 <script type="text/javascript">

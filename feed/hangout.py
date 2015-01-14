@@ -1,8 +1,8 @@
-import webapp2
-from feed import HangoutUrl
 from datetime import datetime
+from feed import *
+from models import *
 
-class HangoutHandler(webapp2.RequestHandler):
+class HangoutHandler(BaseHandler):
 
     def post(self):
         # Set the cross origin resource sharing header to allow AJAX
@@ -19,15 +19,16 @@ class HangoutHandler(webapp2.RequestHandler):
         hangoutUrl.time = datetime.now()
         hangoutUrl.put()
 
-class HangoutKiller(webapp2.RequestHandler):
+class HangoutKiller(BaseHandler):
 
     def get(self):
         hangout = HangoutUrl.get_by_id(1)
         youtube = HangoutUrl.get_by_id(2)
-        diff = datetime.now() - hangout.time
-        if diff.seconds > 240:
-            ndb.Key(HangoutUrl, 1).delete()
-            ndb.Key(HangoutUrl, 2).delete()
+        if hangout:
+            diff = datetime.now() - hangout.time
+            if diff.seconds > 240:
+                ndb.Key(HangoutUrl, 1).delete()
+                ndb.Key(HangoutUrl, 2).delete()
 
 application = webapp2.WSGIApplication([
     ('/hangout_kill', HangoutKiller),

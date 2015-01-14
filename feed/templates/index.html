@@ -1,17 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1 style="text-align:center;">Stuypulse on AIR</h1>
-<hr>
-<div class="sixteen columns"><p>
-{% if hangout_exists %}
-    There is currently a hangout on air!<br>
-    Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-{% else %}
-    There is currently no hangout on air! boohoo :(
-{% endif %}
-</p></div>
-<div id="youtube" style="text-align:center;"></div>
+<div class="page-header">
+    <h1 class="text-center">StuyPulse on AIR</h1>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    {% if hangout_exists %}
+        There is currently a hangout on air!<br>
+        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+    {% else %}
+        There is currently no hangout on air! boohoo :(
+    {% endif %}
+    </div>
+</div>
+<div id="youtube" class="text-center"></div>
 {% endblock %}
+
 {% block scripts %}
 {% if hangout_exists %}
 <script type="text/javascript">

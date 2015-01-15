@@ -6,21 +6,23 @@
 {% include "navbar.html" %}
 {% if hangout_exists %}
 <div class="row">
-    <div class="col-md-10">
-        There is currently a hangout on air!<br>
-        Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
-        If you ever accidently close the hangout, start the <code>Stuypulse on Air</code> app on the left side of the hangout screen.
-    </div>
-    <div class="col-md-2">
-        <a href="/admin" class="button" onclick="var c=window.confirm('Are you sure you want to kill the feed?');if(c){$.get('/admin',{'kill':'True'},function(){window.location.reload();})}">KILL THE FEED</a>
+    <div class="col-md-12">
+        <p class="lead">
+            <a href="/admin" class="btn btn-warning pull-right" onclick="var c=window.confirm('Are you sure you want to kill the feed?');if(c){$.get('/admin',{'kill':'True'},function(){window.location.reload();})}">KILL THE FEED</a>
+            There is currently a hangout on air!<br>
+            Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+            If you ever accidently close the hangout, start the <code>StuyPulse on Air</code> app on the left side of the hangout screen.
+        </p>
     </div>
 </div>
 <div id="youtube" class="text-center"></div>
 {% else %}
 <div class="row">
     <div class="col-md-12">
-        There is currently no hangout on air! boohoo :(<br>
-        Would you like to create a hangout?
+        <p class="lead">
+            There is currently no hangout on air! boohoo :(<br>
+            Would you like to create a hangout?
+        </p>
         <div id="placeholder-div"></div>
     </div>
 </div>

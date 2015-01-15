@@ -1,5 +1,14 @@
 from google.appengine.ext import ndb
 
-class HangoutUrl(ndb.Model):
-    content = ndb.StringProperty()
-    time = ndb.DateTimeProperty()
+class Hangout(ndb.Model):
+    url = ndb.StringProperty()
+    time = ndb.DateTimeProperty(auto_now_add=True)
+
+class Youtube(ndb.Model):
+    video = ndb.StringProperty()
+    time = ndb.DateTimeProperty(auto_now_add=True)
+
+class CurrentFeed(ndb.Model):
+    hangout = ndb.KeyProperty(default=None)
+    youtube = ndb.KeyProperty(default=None)
+    update = ndb.DateTimeProperty(auto_now=True)

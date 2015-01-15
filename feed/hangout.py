@@ -5,30 +5,43 @@ from models import *
 class HangoutHandler(BaseHandler):
 
     def post(self):
-        # Set the cross origin resource sharing header to allow AJAX
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-        hangout = self.request.get('hangoutUrl')
-        if hangout != '':
-            hangoutUrl = HangoutUrl(id=1, content=hangout, time=datetime.now())
-            hangoutUrl.put()
-        youtube = self.request.get('youtubeId')
-        if youtube != '':
-            youtubeUrl = HangoutUrl(id=2, content=youtube)
-            youtubeUrl.put()
-        hangoutUrl = HangoutUrl.get_by_id(1)
-        hangoutUrl.time = datetime.now()
-        hangoutUrl.put()
+
+        hangout_url = self.request.get('hangoutUrl')
+        hangout = None
+        if hangout_url != '':
+            hangout = Hangout()
+            hangout.url = hangout_url
+            hangout.put()
+
+        youtube_id = self.request.get('youtubeId')
+        youtube = None
+        if youtube_id != '':
+            youtube = Youtube()
+            youtube.video = youtube_id
+            youtube.put()
+
+        current = ndb.Key(CurrentFeed, 'current').get()
+        if not current:
+            current = CurrentFeed(id='current')
+        current.hangout = hangout.key
+        current.youtube = youtube.key
+        current.put()
 
 class HangoutKiller(BaseHandler):
 
     def get(self):
-        hangout = HangoutUrl.get_by_id(1)
-        youtube = HangoutUrl.get_by_id(2)
-        if hangout:
-            diff = datetime.now() - hangout.time
-            if diff.seconds > 240:
-                ndb.Key(HangoutUrl, 1).delete()
-                ndb.Key(HangoutUrl, 2).delete()
+        current = ndb.Key(CurrentFeed, 'current').get()
+        if not current:
+            current = CurrentFeed()
+
+        if current.hangout:
+            hangout = current.hangout.get()
+            if hangout:
+                if (datetime.now() - hangout.time).seconds > 300:
+                    current.hangout = None
+                    current.youtube = None
+                    current.put()
 
 application = webapp2.WSGIApplication([
     ('/hangout_kill', HangoutKiller),

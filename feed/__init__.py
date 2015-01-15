@@ -1,10 +1,14 @@
 import os, webapp2, jinja2
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from jinja_functions import *
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
     extensions=['jinja2.ext.autoescape'])
+JINJA_ENVIRONMENT.filters.update({
+    'datetimeformat': jinja_functions.datetimeformat
+})
 
 class BaseHandler(webapp2.RequestHandler):
 

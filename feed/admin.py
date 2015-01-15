@@ -8,23 +8,32 @@ class AdminHandler(AdminBaseHandler):
 
     def get(self):
         user = users.get_current_user()
-        if user:
-            current = ndb.Key(CurrentFeed, 'current').get()
-            if not current:
-                current = CurrentFeed(id='current')
-            if self.request.get('kill') == 'True':
-                current.hangout = None
-                current.youtube = None
-                current.put()
-            template_values = {
-                'hangout_exists': current.hangout != None and current.youtube != None,
-                'hangout_link': current.hangout.get().url if current.hangout else '',
-                'youtube_link': current.youtube.get().video if current.youtube else 'dQw4w9WgXcQ'
-            }
-            self.render_template('admin.html', template_values)
-        else:
-            self.redirect('/')
+        current = ndb.Key(CurrentFeed, 'current').get()
+        if not current:
+            current = CurrentFeed(id='current')
+        if self.request.get('kill') == 'True':
+            current.hangout = None
+            current.youtube = None
+            current.put()
+        template_values = {
+            'hangout_exists': current.hangout != None and current.youtube != None,
+            'hangout_link': current.hangout.get().url if current.hangout else '',
+            'youtube_link': current.youtube.get().video if current.youtube else 'dQw4w9WgXcQ'
+        }
+        self.render_template('admin-home.html', template_values)
+
+class AdminHistory(AdminBaseHandler):
+
+    def get(self):
+        user = users.get_current_user()
+        query = Youtube.query().order(-Youtube.time)
+        youtube_list = query.fetch()
+        template_values = {
+            'youtube_list': youtube_list
+        }
+        self.render_template('admin-history.html', template_values)
 
 application = webapp2.WSGIApplication([
+    ('/admin/history', AdminHistory),
     ('/admin.*', AdminHandler)
 ], debug=True)

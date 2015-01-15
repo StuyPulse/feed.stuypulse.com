@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+{% include "admin-navbar.html" %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Youtube Link</th>
+        </thead>
+        <tbody>
+            {% for row in youtube_list %}
+            <tr>
+                <td>{{ row.time|datetimeformat }}</td>
+                <td>{{ row.title }}</td>
+                <td><a href="https://www.youtube.com/embed/{{ row.video }}">https://www.youtube.com/embed/{{ row.video }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

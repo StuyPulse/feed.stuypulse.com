@@ -6,6 +6,7 @@ class Hangout(ndb.Model):
 
 class Youtube(ndb.Model):
     video = ndb.StringProperty()
+    title = ndb.StringProperty(default='')
     time = ndb.DateTimeProperty(auto_now_add=True)
 
 class CurrentFeed(ndb.Model):

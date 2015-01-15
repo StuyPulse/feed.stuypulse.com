@@ -6,6 +6,9 @@ class HangoutHandler(BaseHandler):
 
     def post(self):
         self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        current = ndb.Key(CurrentFeed, 'current').get()
+        if not current:
+            current = CurrentFeed(id='current')
 
         hangout_url = self.request.get('hangoutUrl')
         hangout = None
@@ -13,6 +16,7 @@ class HangoutHandler(BaseHandler):
             hangout = Hangout()
             hangout.url = hangout_url
             hangout.put()
+            current.hangout = hangout.key
 
         youtube_id = self.request.get('youtubeId')
         youtube = None
@@ -20,12 +24,8 @@ class HangoutHandler(BaseHandler):
             youtube = Youtube()
             youtube.video = youtube_id
             youtube.put()
+            current.youtube = youtube.key
 
-        current = ndb.Key(CurrentFeed, 'current').get()
-        if not current:
-            current = CurrentFeed(id='current')
-        current.hangout = hangout.key
-        current.youtube = youtube.key
         current.put()
 
 class HangoutKiller(BaseHandler):

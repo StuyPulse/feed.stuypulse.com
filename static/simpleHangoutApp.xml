@@ -12,75 +12,77 @@
  * License for the specific language governing permissions and limitations under
  * the License
 -->
-	<ModulePrefs title="Hangout Starter">
+	<ModulePrefs title="StuyPulse on AIR">
 		<Require feature="rpc" />
 		<Require feature="views" />
 		<Require feature="locked-domain" />
 	</ModulePrefs>
-	<Content type="html"><![CDATA[     
-
+	<Content type="html"><![CDATA[
 <html>
-<style type="text/css">
-<!--
-.button {
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
-  background: -moz-linear-gradient(top, #fff, #ddd);  
-  border: 1px solid #bbb;
+    <head>
+        <style>
+        .spacer {
+            height:30px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        </style>
+    </head>
+    <body>
+
+        <h1>StuyPulse on AIR</h1>
+        <div class="text-center">
+            <img src="http://stuypulse.com/img/694-logo.png" alt="Stuypulse Logo" />
+        </div>
+
+        <h2>Hangout Information</h2>
+        <div id="hangout">
+            <div class="url"></div>
+            <div class="participants"></div>
+        </div>
+        <div class="spacer"></div>
+        <h2>Youtube Stream Information</h2>
+        <div id="youtube">
+            <div class="url"></div>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+
+        <script>
+function updateInfo() {
+    $('#hangout .url').html('url: <a target="_blank" href="' + gapi.hangout.getHangoutUrl() + '">' + gapi.hangout.getHangoutUrl());
+    participants = gapi.hangout.getParticipants();
+    participants_html = (participants.map(function(p) {return p.displayName;})).join('<br>');
+    $('#hangout .participants').html(participants_html);
+    if (gapi.hangout.onair.getYouTubeLiveId()) {
+        $('#youtube .url').html('url: <a target="_blank" href="https://www.youtube.com/watch?v=' + gapi.hangout.onair.getYouTubeLiveId() + '">' + gapi.hangout.onair.getYouTubeLiveId());
+    }
+    else {
+        $('#youtube .url').text('You are not broadcasting!');
+    }
 }
 
-.button:active {
-	background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#333)); 
-	background: -moz-linear-gradient(bottom, #ddd, #aaa); }
-
--->
-</style>
-<body>
-
-<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-
-<div id="hangout-url"></div>
-<div id="youtube-id"></div>
-
-<h1>
-    Ignore<br>
-    Anything<br>
-    Here<br>
-</h1>
-<img src="http://stuypulse.com/img/694-logo.png" alt="Stuypulse Logo" />
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/static/jquery.min.js"><\/script>')</script>
-
-<script>
 function init() {
-  // When API is ready...                                                         
-  gapi.hangout.onApiReady.add(
-    function(eventObj) {
-      if (eventObj.isApiReady) {
-        $('#hangout-url').text(gapi.hangout.getHangoutUrl());
-        $.post("//feed-stuypulse.appspot.com/hangout", {'hangoutUrl': gapi.hangout.getHangoutUrl()}, function() {});
-        gapi.hangout.onair.onBroadcastingChanged.add(function() {
-          gapi.hangout.onair.onYouTubeLiveIdReady.add(function() {
-            $('#youtube-id').text(gapi.hangout.onair.getYouTubeLiveId());
-            $.post("//feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}, function() {});
-          });
-        });
-      }
-  });
+    gapi.hangout.onApiReady.add(function(eventObj) {
+        updateInfo();
+        $.post("//feed-stuypulse.appspot.com/hangout", {'hangoutUrl': gapi.hangout.getHangoutUrl()});
+    });
+    gapi.hangout.onair.onYouTubeLiveIdReady.add(function() {
+        updateInfo();
+        $.post("//feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}); // Separate because of scope
+    });
+    setInterval(function() {
+        $.post("https://feed-stuypulse.appspot.com/hangout", {'heartbeart': 'Alive'});
+    }, 150000);
 }
 
 // Wait for gadget to load.                                                       
 gadgets.util.registerOnLoadHandler(init);
-</script>
-
-<script>
-setInterval(function() {
-  $.post("https://feed-stuypulse.appspot.com/hangout", {'time': 'True'}, function() {});
-}, 150000);
-</script>
-</body>
+        </script>
+    </body>
+</html>
 ]]>
 </Content>
 </Module>

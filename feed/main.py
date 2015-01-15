@@ -14,8 +14,8 @@ class MainHandler(BaseHandler):
             current = CurrentFeed(id='current')
         template_values = {
             'hangout_exists': current.hangout != None and current.youtube != None,
-            'hangout_link': current.hangout.get().url if current.hangout else '',
-            'youtube_link': current.youtube.get().video if current.youtube else 'dQw4w9WgXcQ'
+            'hangout_link': current.hangout.get().url if current.hangout else None,
+            'youtube_link': current.youtube.get().video if current.youtube else None
         }
         self.render_template('index.html', template_values)
 

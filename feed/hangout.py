@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from feed import *
 from models import *
@@ -9,10 +10,12 @@ class HangoutHandler(BaseHandler):
         current = ndb.Key(CurrentFeed, 'current').get()
         if not current:
             current = CurrentFeed(id='current')
+        current.update = datetime.now()
 
         hangout_url = self.request.get('hangoutUrl')
         hangout = None
         if hangout_url != '':
+            logging.info("Hangout Url: %s" % hangout_url)
             hangout = Hangout()
             hangout.url = hangout_url
             hangout.put()
@@ -21,6 +24,7 @@ class HangoutHandler(BaseHandler):
         youtube_id = self.request.get('youtubeId')
         youtube = None
         if youtube_id != '':
+            logging.info("Youtube Id: %s" % youtube_id)
             youtube = Youtube()
             youtube.video = youtube_id
             youtube.put()
@@ -35,13 +39,10 @@ class HangoutKiller(BaseHandler):
         if not current:
             current = CurrentFeed()
 
-        if current.hangout:
-            hangout = current.hangout.get()
-            if hangout:
-                if (datetime.now() - hangout.time).seconds > 300:
-                    current.hangout = None
-                    current.youtube = None
-                    current.put()
+        if (datetime.now() - current.update).seconds > 300:
+            current.hangout = None
+            current.youtube = None
+            current.put()
 
 application = webapp2.WSGIApplication([
     ('/hangout_kill', HangoutKiller),

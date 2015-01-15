@@ -4,29 +4,16 @@
     <div class="col-md-12">
         <p class="lead">
         {% if hangout_exists %}
-            There is currently a hangout on air!<br>
-            Click <a href="{{ hangout_link }}">here</a> to join the hangout!<br>
+            There is currently a hangout on air! Click <a href="{{ hangout_link }}">here</a> to join the hangout!
         {% else %}
             There is currently no hangout on air! boohoo :(
         {% endif %}
         </p>
     </div>
 </div>
-<div id="youtube" class="text-center">
+{% if hangout_exists %}
+<div id="youtube" class="embed-responsive embed-responsive-16by9">
     <iframe style="margin:auto; width:853; height:480;" src="//www.youtube.com/embed/{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>
 </div>
-{% endblock %}
-
-{% block scripts %}
-{% if hangout_exists %}
-<script type="text/javascript">
-$(document).ready(youtubeResize);
-$(window).resize(youtubeResize);
-function youtubeResize() {
-    var w = $('#youtube').parent().width() * .9;
-    $('#youtube iframe').width(w);
-    $('#youtube iframe').height(w / 1.777);
-}
-</script>
 {% endif %}
 {% endblock %}

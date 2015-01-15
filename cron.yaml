@@ -1,4 +1,4 @@
 cron:
-- description: hangout heartbeat
+- description: Heartbeat
   url: /hangout_kill
   schedule: every 5 minutes

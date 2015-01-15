@@ -1,8 +1,5 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="page-header">
-    <h1 class="text-center">StuyPulse on AIR</h1>
-</div>
 <div class="row">
     <div class="col-md-12">
         <p class="lead">
@@ -15,16 +12,15 @@
         </p>
     </div>
 </div>
-<div id="youtube" class="text-center"></div>
+<div id="youtube" class="text-center">
+    <iframe style="margin:auto; width:853; height:480;" src="//www.youtube.com/embed/{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>
+</div>
 {% endblock %}
 
 {% block scripts %}
 {% if hangout_exists %}
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#youtube').html('<iframe style="margin:auto; width:853; height:480;" src="//www.youtube.com/embed/{{ youtube_link }}" frameborder="0" allowfullscreen></iframe>');
-    youtubeResize();
-});
+$(document).ready(youtubeResize);
 $(window).resize(youtubeResize);
 function youtubeResize() {
     var w = $('#youtube').parent().width() * .9;

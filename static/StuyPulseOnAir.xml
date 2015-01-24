@@ -76,9 +76,8 @@ function init() {
                 $.post("//feed-stuypulse.appspot.com/hangout", {'youtubeId': gapi.hangout.onair.getYouTubeLiveId()}); // Separate because of scope
             });
         }
-    }
     });
-        setInterval(function() {
+    setInterval(function() {
         $.post("https://feed-stuypulse.appspot.com/hangout", {'heartbeart': 'Alive'});
     }, 150000);
 }

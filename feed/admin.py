@@ -1,4 +1,4 @@
-import os, urllib
+import urllib, logging
 from google.appengine.api import users
 from google.appengine.ext import ndb
 from feed import *
@@ -40,7 +40,7 @@ class AdminSettings(AdminBaseHandler):
 
     def post(self):
         email_recipients = self.request.get("email-recipients")
-        print email_recipients
+        logging.info(email_recipients)
         settings = ndb.Key(Settings, 'settings').get()
         if not settings:
             settings = Settings(id='settings')

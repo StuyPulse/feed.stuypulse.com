@@ -13,3 +13,6 @@ class CurrentFeed(ndb.Model):
     hangout = ndb.KeyProperty(default=None)
     youtube = ndb.KeyProperty(default=None)
     update = ndb.DateTimeProperty(auto_now=True)
+
+class Settings(ndb.Model):
+    email_recipients = ndb.StringProperty(repeated=True)

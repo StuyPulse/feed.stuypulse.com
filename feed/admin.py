@@ -33,7 +33,32 @@ class AdminHistory(AdminBaseHandler):
         }
         self.render_template('admin-history.html', template_values)
 
+class AdminSettings(AdminBaseHandler):
+
+    def get(self):
+        self._serve_page()
+
+    def post(self):
+        email_recipients = self.request.get("email-recipients")
+        print email_recipients
+        settings = ndb.Key(Settings, 'settings').get()
+        if not settings:
+            settings = Settings(id='settings')
+        settings.email_recipients = email_recipients.split("\r\n")
+        settings.put()
+        self._serve_page()
+
+    def _serve_page(self):
+        settings = ndb.Key(Settings, 'settings').get()
+        if not settings:
+            settings = {}
+        template_values = {
+            'settings': settings
+        }
+        self.render_template('admin-settings.html', template_values)
+
 application = webapp2.WSGIApplication([
     ('/admin/history', AdminHistory),
+    ('/admin/settings', AdminSettings),
     ('/admin.*', AdminHandler)
 ], debug=True)

@@ -15,7 +15,7 @@ class HangoutHandler(BaseHandler):
 
         hangout_url = self.request.get('hangoutUrl')
         hangout = None
-        if hangout_url != '':
+        if hangout_url != '' and not current.hangout:
             logging.info("Hangout Url: %s" % hangout_url)
             hangout = Hangout()
             hangout.url = hangout_url
@@ -24,7 +24,7 @@ class HangoutHandler(BaseHandler):
 
         youtube_id = self.request.get('youtubeId')
         youtube = None
-        if youtube_id != '':
+        if youtube_id != '' and not current.youtube:
             logging.info("Youtube Id: %s" % youtube_id)
             youtube = Youtube()
             youtube.video = youtube_id

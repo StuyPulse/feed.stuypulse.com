@@ -14,6 +14,7 @@ class AdminHandler(AdminBaseHandler):
         if self.request.get('kill') == 'True':
             current.hangout = None
             current.youtube = None
+            current.email_sent = False
             current.put()
         template_values = {
             'hangout_exists': current.hangout != None and current.youtube != None,

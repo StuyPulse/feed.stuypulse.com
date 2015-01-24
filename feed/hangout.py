@@ -31,11 +31,9 @@ class HangoutHandler(BaseHandler):
             youtube.put()
             current.youtube = youtube.key
 
-        current.put()
-
         if current.hangout and current.youtube and not current.email_sent:
             settings = ndb.Key(Settings, 'settings').get()
-            mail.send_mail(sender="Stuypulse on Air <ntw3450@gmail.com>",
+            mail.send_mail(sender="Stuypulse on Air <dqiu55@gmail.com>",
                            to="%s" % (', '.join(settings.email_recipients)),
                            subject="A Virtual Lab Feed has been started!",
                            body="Hey all, this is an automated message informing you that a Google Hangouts for the lab is live at https://feed-stuypulse.appspot.com!",
@@ -44,7 +42,10 @@ class HangoutHandler(BaseHandler):
 <p>This is an automated message informing you that a Google Hangouts for the lab has been started!</p>
 <p>You can <b>join</b> the hangout here: <a href="%s">%s</a></p>
 <p>Or, you can <b>watch</b> the youtube livestream here: <a href="https://feed-stuypulse.appspot.com">https://feed-stuypulse.appspot.com</a></p>
-""" % (current.hangout, current.hangout))
+""" % (current.hangout.get().url, current.hangout.get().url))
+            current.email_sent = True
+
+        current.put()
 
 class HangoutKiller(BaseHandler):
 
